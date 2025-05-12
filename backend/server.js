@@ -9,8 +9,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import emailRoutes from './src/routes/emailRoutes.js';
-import http from 'http';
-import { WebSocketServer } from 'ws';
+import initializeWebSocket from "./src/websocket/websocket.js";
+
 
 const app = express();
 
@@ -41,34 +41,7 @@ app.use(authenticateToken);
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-const server = http.createServer(app);
-const wss = new WebSocketServer({server});
-const clients = new Set();
-
-wss.on('connection', (ws) => {
-  ws.userid = null;
-  clients.add(ws);
-  
-  ws.on('message', (message) => {
-      const messageData = JSON.parse(message);
-      
-      if (!ws.userid) {
-          ws.userid = messageData.userid;
-      }
-
-      clients.forEach((client) => {
-          if (client.userid !== messageData.userid) {
-              client.send(JSON.stringify(messageData));
-          }
-      });
-  });
-
-  ws.on('close', () => {
-      clients.delete(ws);
-  });
-});
+initializeWebSocket(app); 
 
 const port = 3000;
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+console.log(`Server running on port ${port}`);

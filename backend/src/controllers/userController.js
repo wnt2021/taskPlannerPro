@@ -1,5 +1,4 @@
 import User from "../models/user.js";
-import Admin from "../models/admin.js";
 import Task from "../models/task.js";
 import Event from "../models/event.js";
 import bcrypt from 'bcrypt';
@@ -40,6 +39,17 @@ const loginUser = async (req, res) => {
 
         res.status(200).json({success: "User logged succesfully", token: token, user: account});
 
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'Server Error', details: error});
+    }
+}
+
+const getAllUsers = async (req, res) => {
+    try {
+        const user = await User.find();
+
+        res.status(200).json({success: "Users list", user: user});
     } catch (error) {
         console.error(error);
         res.status(500).json({error: 'Server Error', details: error});
@@ -181,16 +191,18 @@ const listPoint = async(req, res) => {
     }
 }
 
-const getUsers = async(req, res) => {
-    const {adminId} = req.params;
+const updateExperience = async(req, res) => {
+    const {id} = req.params;
+    const {xp} = req.body;
 
     try {
-        const users = await User.find({admin: adminId});
+        const experience = await User.findByIdAndUpdate(id, {xp: xp}, {new:true});
 
-        res.status(200).json(users);
+        res.status(200).json(experience);
     } catch (error) {
-        res.status(404).json({error: "Users Error", details: error});
+        res.status(404).json({error: "experience Error", details: error});
     }
 }
 
-export {createUser, loginUser, logout, savePoints, registerUser, listPoint, getUsers, saveEventPoints};
+export {createUser, loginUser, logout, savePoints, 
+registerUser, listPoint, saveEventPoints, updateExperience, getAllUsers};

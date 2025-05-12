@@ -1,16 +1,15 @@
 import http from "http";
-import WebSocket from "ws";
-import { config } from "../config/dbconfig.js";
+import { WebSocketServer } from "ws";
 import handleConnection from "../controllers/chatController.js";
 
-function initializeWebSocket() {
-    const server = http.createServer();
-    const wss = new WebSocket.Server({ server, ...config.wsOptions });
+function initializeWebSocket(app) {
+    const server = http.createServer(app);
+    const wss = new WebSocketServer({ server });
 
     wss.on('connection', handleConnection);
 
-    server.listen(config.port, () => {
-        console.log(`Servidor WebSocket corriendo en puerto ${config.port}`);
+    server.listen(3000, () => {
+        console.log('Servidor WebSocket corriendo en puerto 3000');
     });
 
     return server;

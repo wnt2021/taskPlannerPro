@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     relationship: {type: Number, required: false},
     productivity: {type: Number, required: false},
     coins: {type: Number, required: false},
-    level: {type: Number}
+    level: {type: Number},
+    xp: {type: Number}
 });
 
 const User = mongoose.model('User', userSchema);

@@ -8,8 +8,6 @@ function handleConnection(ws) {
         try {
             const messageData = JSON.parse(message);
 
-            console.log(messageData);
-
             if (messageData.type === 'loadHistory') {
                 const messages = await Chat.find({
                     $or: [
