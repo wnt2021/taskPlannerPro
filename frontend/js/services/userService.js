@@ -34,11 +34,9 @@ async function registerUser(name, email, password, role){
     }
 };
 
-async function listUsers(adminId){
-    console.log(adminId);
-    
+async function listUsers(){
     try {
-        const response = await fetch(`http://127.0.0.1:3000/api/users/${adminId}`, {
+        const response = await fetch(`http://127.0.0.1:3000/api/users`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

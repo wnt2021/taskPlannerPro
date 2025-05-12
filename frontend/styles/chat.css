@@ -151,6 +151,47 @@ html {
     border-radius: 4px;
   }
 
+.input-title {
+  width: 50%;
+  background-color: #3f3f46;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: white;
+  border: 1px solid #4b5563;
+  outline: none;
+  transition: all 0.3s ease;
+  margin-top: 7rem;
+}
+
+.input-title:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.5);
+}
+
+#connectBtn {
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  margin-top: 1em;
+}
+
+#connectBtn {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+#connectBtn:hover {
+  background: linear-gradient(to right, #9333ea, #db2777);
+  transform: scale(1.05);
+}
+
   @media (max-width: 600px) {
     h1 {
       font-size: 1.5rem;

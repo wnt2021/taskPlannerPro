@@ -308,15 +308,12 @@ h3::first-letter {
   border-radius: 0.5rem;
 }
 
-.custom-avatar {
-  border-radius: 9999px;
-  background-size: cover;
-  border: 2px solid #c084fc;
-  width: 100px; 
-  height: 100px;
-  top: 18px;
-  right: 18px;
-  position: absolute;
+.icon-profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
 }
 
 .fa-trash{

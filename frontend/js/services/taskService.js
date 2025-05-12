@@ -139,5 +139,21 @@ async function emailTaskUpdate(title, description, deadline, trait, points){
     }
 }
 
+async function experienceLevel(id, xp){
+    try {
+        const response = await fetch(`http://127.0.0.1:3000/api/experience/${id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({xp})
+        });
+
+        const result = await response.json();
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.error('Error al enviar el email:', error.message);
+    }
+}
+
 export {taskCreate, list, deleteTask, updateTask, 
-points, pointsList, emailTask, emailTaskUpdate};
+points, pointsList, emailTask, emailTaskUpdate, experienceLevel};

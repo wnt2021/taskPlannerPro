@@ -1,4 +1,4 @@
-import {logout} from "./services/userService.js";
+import {logout, listUsers} from "./services/userService.js";
 const ws = new WebSocket('ws://localhost:3000');
 const msgInput = document.getElementById('msgInput');
 const sendBtn = document.getElementById('sendBtn');
@@ -8,14 +8,43 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 const username =  user.role === 'system' ? 'System' : user.name;
 
-ws.addEventListener('open', () => {
-    console.log('Conectado al servidor WebSocket');
+async function getUsers() {
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    ws.send(JSON.stringify({
-        type: 'loadHistory',
-        userId: user.role === 'system' ? user._id : '',
-        targetId: user.role !== 'system' ? user._id : ''
-    }));
+    try {
+        const data = await listUsers();
+        const users = data.user;
+
+        const select = document.getElementById("userSelect");
+
+        const targetRole = user.role === 'system' ? 'adventurer' : 'system';
+
+        users.filter(u => u.role === targetRole).forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option._id;
+                opt.textContent = option.role === 'system' ? 'System' : option.name;
+                select.appendChild(opt);
+            });
+
+    } catch (error) {
+        console.error("Error al obtener los datos", error);
+    }
+}
+
+
+getUsers();
+
+document.getElementById('connectBtn').addEventListener("click", () => {
+    ws.addEventListener('open', () => {
+        console.log('Conectado al servidor WebSocket');
+        const idUser = document.getElementById("userSelect").value;
+    
+        ws.send(JSON.stringify({
+            type: 'loadHistory',
+            userId: user.role === 'system' ? user._id : '',
+            targetId: idUser
+        }));
+    });
 });
 
 ws.addEventListener('message', (event) => {
@@ -38,12 +67,14 @@ ws.addEventListener('close', () => {
 
 function sendMessage() {
     const message = msgInput.value.trim();
+    const idUser = document.getElementById("userSelect").value;
+
     if (message) {
         const messageData = {
             type: 'message',
             message: message,
-            senderId: user._id,
-            receiverId: user.role === 'system' ? user._id : user._id,
+            senderId: user.role === 'system' ? user._id : user._id,
+            receiverId: idUser,
             username: username
         };
 

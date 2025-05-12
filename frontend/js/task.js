@@ -1,31 +1,9 @@
 import {logout} from "./services/userService.js";
 import {taskCreate, list, deleteTask, updateTask, points, 
-pointsList, emailTask, emailTaskUpdate} from "./services/taskService.js";
+pointsList, emailTask, emailTaskUpdate, experienceLevel} from "./services/taskService.js";
 import { jwtDecode } from 'https://cdn.jsdelivr.net/npm/jwt-decode@4.0.0/+esm';
 
-
-let xp = 0;
-
-document.getElementById("modal-profile").addEventListener("click", () => {
-    let overlay = document.querySelector("#overlay");    
-    overlay.style.display = "flex";
-});
-
-document.getElementById("close").addEventListener("click", () => {
-    let overlay = document.querySelector("#overlay");    
-    overlay.style.display = "none";
-});
-
-document.getElementById("cancel-btn").addEventListener("click", () => {
-    let overlay = document.querySelector("#overlay");    
-    overlay.style.display = "none";
-});
-
-document.getElementById("overlay").addEventListener("click", (event) => {
-    if (event.target === event.currentTarget) {
-      event.currentTarget.style.display = "none";
-    }
-});
+let level = 1;
 
 document.getElementById("quest").addEventListener("click", () => {
     let overlay = document.querySelector("#task-overlay");    
@@ -117,7 +95,6 @@ async function sendTaskEmail(title, description, deadline, trait, points){
 
 function displayButtonQuest(){
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user.role);
     
     if(user.role === 'system'){            
         document.getElementById("quest").style.display = "block";
@@ -152,9 +129,7 @@ function displayPoints(data) {
 
     pointHeader.innerHTML = "";
 
-    data.forEach(item => {
-        console.log(item);
-        
+    data.forEach(item => {        
         let skill = document.createElement("div");
         skill.classList.add("skill");
 
@@ -370,20 +345,32 @@ function handlePoints(){
     });
 }
 
-function progressBar(){
-    let progress = document.getElementById("progress-bar");
-    
-    if (xp < 100) {
+async function progressBar(){
+    // let progress = document.getElementById("progress-bar");
+    // let levelText = document.getElementById("level")
+    try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        let xp = user.xp || 0;
         xp += 20;
-        progress.style.width = xp + "%";
-      }
+        const data = await experienceLevel(user._id, xp);
+        displayExperience(data);
+    } catch (error) {
+        console.error("Error en la llamada", error);
+    }
+}
+
+function displayExperience(data){
+    let progress = document.getElementById("progress-bar");
+    console.log(data.xp);
+    
+    progress.style.width = data.xp + '%';
 }
 
 async function sendTraits(taskId, strength, intelligence, relationship, productivity){
     try {
         const user = JSON.parse(localStorage.getItem('user'));
         const data = await points(user._id, taskId, strength, intelligence, relationship, productivity);
-        window.location.reload();
+        // window.location.reload();
 
     } catch (error) {
         console.error("Error en la llamada", error);
