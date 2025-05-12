@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Planner</title>
+    <link rel="stylesheet" href="../styles/task.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <script type="module" defer src="../js/task.js"></script>
+    <script defer src="https://kit.fontawesome.com/2469414de4.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">TaskPlannerPro</div>
+
+        <div class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Tasks</a></li>
+            <li><a href="./event.html">Events</a></li>
+            <li><a href="./chat.html">Chat</a></li>
+            <li id="logout" class="logout">Logout <i class="fa-solid fa-right-from-bracket"></i></li>
+        </ul>
+    </nav>
+
+    <div class="task-container">
+        <div class="card profile-card">
+            <div class="circle-gradient">
+                <img src="../public/profile.jpg" class="custom-avatar" alt="">
+            </div>
+            <h2 class="avatar">Welcome, <strong class="title-user-card" id="userName">Adventurer</strong> <i class="fa-solid fa-pen" id="modal-profile"></i></h2>
+            <div class="level">
+                <p>Level 1</p>
+                <p>XP: 0/100</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+            </div>
+            <div class="points-header">             
+            </div>
+        </div>
+
+            <div class="card">
+                <div class="header-card">
+                    <span class="quest-text">Active quests</span>
+                    <button class="quest role-icon" id="quest"><i class="fa-solid fa-plus"></i>New quest</button>
+                </div>
+    
+                <div class="task-header">
+                </div>
+            </div>
+        </div>
+
+<!-- Modal -->
+ <div class="overlay" id="overlay">
+     <div class="modal-content">
+         <div class="header">
+             <h3>Metamorphosis</h3>
+             <i class="fa-solid fa-rectangle-xmark" id="close"></i>
+         </div>
+         <div class="file-header">
+             <label for="file" class="labelFile">
+                 <span><i class="fa-solid fa-cloud-arrow-up"></i></span>
+                 <p class="file-text">drag and drop your file here or click to select a file!</p>
+             </label>
+             <input class="input" name="text" id="file" type="file" />
+         </div>
+         <div class="button-form">
+             <button class="cancel-btn" id="cancel-btn">Cancel</button>
+             <button class="transform-btn">Transform</button>
+         </div>
+     </div>
+ </div>
+
+ <div class="overlay" id="task-overlay">
+    <div class="modal-content">
+        <div class="header">
+            <h3>New Quest</h3>
+            <i class="fa-solid fa-rectangle-xmark" id="task-close"></i>
+        </div>
+        <div>
+            <label for="" class="quest-title">Quest title</label>
+            <input type="text" id="title" name="title" class="input-title">
+            <label for="" class="quest-title">Quest description</label>
+            <textarea name="description" class="input-title" id="description"></textarea>
+            <label for="" class="quest-title">Quest deadline</label>
+            <input type="date" id="deadline" name="deadline" class="input-title">
+            <select name="trait" id="trait" class="input-title">
+                <option value="">Select type:</option>
+                <option value="Strength">Strength</option>
+                <option value="Intelligence">Intelligence</option>
+                <option value="Relationship">Relationship</option>
+                <option value="Productivity">Productivity</option>
+            </select>
+            <label for="" class="quest-title">Quest points</label>
+            <input type="number" id="points" name="points" class="input-title">
+        </div>
+        <div class="error">
+            <strong class="form-error" id="form-error">Please try again</strong>
+        </div>
+        <div class="button-form">
+            <button class="cancel-btn" id="task-cancel-btn">Cancel</button>
+            <button class="transform-btn" id="create">Create</button>
+            <button class="update-btn" id="update">Update</button>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="overlay overlay-event" id="event-overlay">
+    <div class="modal-content">
+        <div class="header">
+            <h3>New Event</h3>
+            <i class="fa-solid fa-rectangle-xmark" id="event-close"></i>
+        </div>
+        <div>
+            <label for="" class="quest-title">Event title</label>
+            <input type="text" name="event-title" id="event-title" class="input-title">
+            <label for="" class="quest-title">Event description</label>
+            <input type="text" name="event-description" id="event-description" class="input-title">
+            <label for="" class="quest-title">Event deadline</label>
+            <input type="date" name="event-deadline" id="event-deadline" class="input-title">
+            <label for="" class="quest-title">Traits</label>
+            <select name="event-trait" id="event-trait" class="input-title">
+                <option value="">Select type:</option>
+                <option value="Strength">Strength</option>
+                <option value="Intelligence">Intelligence</option>
+                <option value="Social">Social</option>
+                <option value="Creativity">Creativity</option>
+            </select>
+            <label for="" class="quest-title">Points</label>
+            <input type="number" name="event-points" id="event-points" class="input-title">
+        </div>
+        <div class="error">
+          <strong class="form-error" id="form-error">Please try again</strong>
+        </div>
+        <div class="button-form">
+            <button class="cancel-btn" id="event-cancel-btn">Cancel</button>
+            <button class="transform-btn" id="event-create">Create</button>
+            <button class="update-btn" id="event-update">Update</button>
+        </div>
+    </div>
+</div> -->
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" href="../styles/event.css">
+    <script defer src="https://kit.fontawesome.com/2469414de4.js" crossorigin="anonymous"></script>
+    <script type="module" defer src="../js/event.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">TaskPlannerPro</div>
+        <ul>
+            <li><a href="./task.html">Tasks</a></li>
+            <li><a href="./event.html">Events</a></li>
+            <li><a href="./chat.html">Chat</a></li>
+            <li id="logout" class="logout">Logout <i class="fa-solid fa-right-from-bracket"></i></li>
+        </ul>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-container">
+          <h1 class="hero-title">Unleash your full potential today</h1>
+          <p class="hero-description">
+            Here, we focus on empowering you with the tools, mindset, and momentum to turn your ambitions into lasting success.          </p>
+          <div class="hero-buttons">
+            <a href="#" class="btn-primary" id="primary">
+              Get started
+            </a>
+            <a href="./task.html" class="btn-secondary">See tasks</a>
+          </div>
+        </div>
+      </section>      
+
+      <section class="create-section section" id="targetSection">
+        <div class="title-create">
+            <h3 class="create-title">Quote of the day</h3>
+            <p class="instruction-text" id="quote-text"></p>
+            <p class="" id="author-text"></p>
+        </div>
+        <div class="btn-header">
+            <button class="btn-primary role-icon" id="btn-create">
+                Get started
+            </button>
+        </div>
+      </section>
+
+      <section class="event-header" id="events">        
+      </section>
+    
+      <!-- Modal -->
+      <div class="overlay" id="event-overlay">
+        <div class="modal-content">
+            <div class="header">
+                <h3>New Event</h3>
+                <i class="fa-solid fa-rectangle-xmark" id="event-close"></i>
+            </div>
+            <div>
+                <label for="" class="quest-title">Name</label>
+                <input type="text" name="name" id="name" class="input-title">
+                <label for="" class="quest-title">Description event</label>
+                <input type="text" name="description" id="description" class="input-title">
+                <label for="" class="quest-title">Date</label>
+                <input type="date" name="date" id="date" class="input-title">
+                <label for="" class="quest-title">Location</label>
+                <input type="text" name="location" id="location" class="input-title">
+                <label for="" class="quest-title">Event image</label>
+                <input type="file" name="image" id="image" class="input-title">
+            </div>
+            <div class="error">
+              <strong class="form-error" id="form-error">Please try again</strong>
+            </div>
+            <div class="error">
+              <strong class="image-error" id="image-error">Only JPG and PNG are allowed</strong>
+            </div>
+            <div class="button-form">
+                <button class="cancel-btn" id="event-cancel-btn">Cancel</button>
+                <button class="transform-btn" id="create">Create</button>
+                <button class="update-btn" id="update">Update</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
